@@ -7,11 +7,11 @@ exports.connect = (url, done) => {
     return done();
   }
 
-  MongoClient.connect(url, (err, db) => {
+  MongoClient.connect(url, (err, client, dbName = 'artists') => {
     if (err) {
       return done(err);
     }
-    state.db = db;
+    state.db = client.db(dbName);
     done();
   });
 }

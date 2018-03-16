@@ -22,14 +22,13 @@ app.get('/', (req, res) =>
 );
 
 app.get('/artists', (req, res) =>
-    console.log(db.get().collection)
-  // db.get().collection('artists').find().toArray((err, docs) => {
-  //   if (err) {
-  //     console.log(err);
-  //     return res.sendStatus(500);
-  //   }
-  //   res.send(docs);
-  // })
+  db.get().collection('artists').find().toArray((err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500);
+    }
+    res.send(docs);
+  })
 );
 
 app.get('/artists/:id', (req, res) =>
