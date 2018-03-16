@@ -5,31 +5,19 @@ const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 
+const artistsController = require('./controllers/artists');
+
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const dbName = 'artists';
 let db = require('./db');
 
-let artists = [
-  { id: 1, name: 'Metallica' },
-  { id: 2, name: 'Iron Maiden' },
-  { id: 3, name: 'Deep Purple' }
-];
-
 app.get('/', (req, res) =>
   res.send('It\'s artists API')
 );
 
-app.get('/artists', (req, res) =>
-  db.get().collection('artists').find().toArray((err, docs) => {
-    if (err) {
-      console.log(err);
-      return res.sendStatus(500);
-    }
-    res.send(docs);
-  })
-);
+app.get('/artists', artistsController.all);
 
 app.get('/artists/:id', (req, res) =>
   db.get().collection('artists').findOne({ _id: ObjectID(req.params.id)},
