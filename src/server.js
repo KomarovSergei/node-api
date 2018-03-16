@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const dbName = 'artists';
-let db;
+let db = require('./db');
 
 let artists = [
   { id: 1, name: 'Metallica' },
@@ -22,17 +22,18 @@ app.get('/', (req, res) =>
 );
 
 app.get('/artists', (req, res) =>
-  db.collection('artists').find().toArray((err, docs) => {
-    if (err) {
-      console.log(err);
-      return res.sendStatus(500);
-    }
-    res.send(docs);
-  })
+    console.log(db.get().collection)
+  // db.get().collection('artists').find().toArray((err, docs) => {
+  //   if (err) {
+  //     console.log(err);
+  //     return res.sendStatus(500);
+  //   }
+  //   res.send(docs);
+  // })
 );
 
 app.get('/artists/:id', (req, res) =>
-  db.collection('artists').findOne({ _id: ObjectID(req.params.id)},
+  db.get().collection('artists').findOne({ _id: ObjectID(req.params.id)},
     (err, data) => {
       if (err) {
         console.log(err);
@@ -48,7 +49,7 @@ app.post('/artists', (req, res) => {
     name: req.body.name
   };
 
-  const collection = db.collection('artists');
+  const collection = db.get().collection('artists');
 
   collection.insert(artist, (err, results) => {
     if (err) {
@@ -64,7 +65,7 @@ app.post('/artists', (req, res) => {
 app.put('/artists/:id', (req, res) => {
   console.log(ObjectID(req.params.id));
   console.log(req.body.name);
-  db.collection('artists').updateOne(
+  db.get().collection('artists').updateOne(
     { _id: ObjectID(req.params.id) },
     { name: req.body.name },
     (err, results) => {
@@ -78,7 +79,7 @@ app.put('/artists/:id', (req, res) => {
 });
 
 app.delete('/artists/:id', (req, res) => {
-  db.collection('artists').deleteOne(
+  db.get().collection('artists').deleteOne(
     { _id: ObjectID(req.params.id) },
     (err, result) => {
       if (err) {
@@ -90,14 +91,9 @@ app.delete('/artists/:id', (req, res) => {
   )
 });
 
-MongoClient.connect('mongodb://localhost:27017/myapi', (err, client) => {
-  if (err)
+db.connect('mongodb://localhost:27017/api', (err, database) => {
+  if (err) {
     return console.log(err);
-  console.log('connected successfully to db');
-
-  db = client.db(dbName);
-
-  app.listen(3012, () =>
-    console.log('API app started')
-  );
+  }
+  app.listen(3012, () => console.log('API app started'));
 });
