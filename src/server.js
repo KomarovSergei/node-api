@@ -22,39 +22,24 @@ app.get('/artists', artistsController.all);
 app.get('/artists/:id', artistsController.findById);
 
 app.post('/artists', artistsController.create);
-// app.post('/artists', (req, res) => {
-//   const artist = {
-//     name: req.body.name
-//   };
 
-//   const collection = db.get().collection('artists');
-
-//   collection.insert(artist, (err, results) => {
-//     if (err) {
-//       console.log(err);
-//       return res.sendStatus(500);
-//     }
-//     console.log("Insert succesfull");
-//     res.send(artist);
-//   });
-// });
-
+app.put('/artists/:id', artistsController.update);
 // debug it!
-app.put('/artists/:id', (req, res) => {
-  console.log(ObjectID(req.params.id));
-  console.log(req.body.name);
-  db.get().collection('artists').updateOne(
-    { _id: ObjectID(req.params.id) },
-    { name: req.body.name },
-    (err, results) => {
-      if (err) {
-        console.log(err);
-        return res.sendStatus(500);
-      }
-      res.sendStatus(200);
-    }
-  )
-});
+// app.put('/artists/:id', (req, res) => {
+//   console.log(ObjectID(req.params.id));
+//   console.log(req.body.name);
+//   db.get().collection('artists').updateOne(
+//     { _id: ObjectID(req.params.id) },
+//     { name: req.body.name },
+//     (err, results) => {
+//       if (err) {
+//         console.log(err);
+//         return res.sendStatus(500);
+//       }
+//       res.sendStatus(200);
+//     }
+//   )
+// });
 
 app.delete('/artists/:id', (req, res) => {
   db.get().collection('artists').deleteOne(

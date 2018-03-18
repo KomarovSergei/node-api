@@ -17,3 +17,10 @@ exports.findById = (id, cb) =>
 exports.create = (artist, cb) =>
   db.get().collection('artists')
     .insert(artist, (err, result) => cb(err, result));
+
+exports.udpate = (id, newData, cb) =>
+  db.get().collection('artists').updateOne(
+    { _id: ObjectID(id) },
+    newData,
+    (err, result) => cb(err, result)
+  );

@@ -28,3 +28,16 @@ exports.create = (req, res) => {
     res.send(artist);
   })
 }
+
+exports.update = (req, res) => {
+  const newData = {
+    name: req.body.name
+  };
+  Artists.update(req.params.id, newData, (err) => {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500);
+    }
+    res.sendStatus(200);
+  })
+};
