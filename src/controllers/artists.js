@@ -27,13 +27,10 @@ exports.create = (req, res) => {
     }
     res.send(artist);
   })
-}
-
+};
 exports.update = (req, res) => {
-  const newData = {
-    name: req.body.name
-  };
-  Artists.update(req.params.id, newData, (err) => {
+  const data = { name: req.body.name };
+  Artists.update(req.params.id, { $set: data }, (err, result) => {
     if (err) {
       console.log(err);
       return res.sendStatus(500);
@@ -41,3 +38,12 @@ exports.update = (req, res) => {
     res.sendStatus(200);
   })
 };
+exports.delete = (req, res) => {
+  Artists.delete(req.params.id, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.senStatus(500);
+    }
+    res.sendStatus(200);
+  })
+}
