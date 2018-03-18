@@ -20,34 +20,24 @@ app.get('/', (req, res) =>
 app.get('/artists', artistsController.all);
 
 app.get('/artists/:id', artistsController.findById);
-// app.get('/artists/:id', (req, res) =>
-//   db.get().collection('artists').findOne({ _id: ObjectID(req.params.id)},
-//     (err, data) => {
-//       if (err) {
-//         console.log(err);
-//         return res.sendStatus(500);
-//       }
-//       res.send(data);
+
+app.post('/artists', artistsController.create);
+// app.post('/artists', (req, res) => {
+//   const artist = {
+//     name: req.body.name
+//   };
+
+//   const collection = db.get().collection('artists');
+
+//   collection.insert(artist, (err, results) => {
+//     if (err) {
+//       console.log(err);
+//       return res.sendStatus(500);
 //     }
-//   )
-// );
-
-app.post('/artists', (req, res) => {
-  const artist = {
-    name: req.body.name
-  };
-
-  const collection = db.get().collection('artists');
-
-  collection.insert(artist, (err, results) => {
-    if (err) {
-      console.log(err);
-      return res.sendStatus(500);
-    }
-    console.log("Insert succesfull");
-    res.send(artist);
-  });
-});
+//     console.log("Insert succesfull");
+//     res.send(artist);
+//   });
+// });
 
 // debug it!
 app.put('/artists/:id', (req, res) => {

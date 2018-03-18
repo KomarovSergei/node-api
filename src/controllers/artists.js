@@ -9,11 +9,22 @@ exports.all = (req, res) =>
     res.send(docs);
   });
 
-  exports.findById = (req, res) =>
-    Artists.findById(req.params.id, (err, doc) => {
-      if (err) {
-        console.log(err);
-        return res.sendStatus(500);
-      }
-      res.send(doc);
-    });
+exports.findById = (req, res) =>
+  Artists.findById(req.params.id, (err, doc) => {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500);
+    }
+    res.send(doc);
+  });
+
+exports.create = (req, res) => {
+  const artist = { name: req.body.name };
+  Artists.create(artist, err => {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500);
+    }
+    res.send(artist);
+  })
+}

@@ -13,3 +13,7 @@ exports.findById = (id, cb) =>
     .findOne({ _id: ObjectID(id) },
       (err, doc) => cb(err, doc)
     );
+
+exports.create = (artist, cb) =>
+  db.get().collection('artists')
+    .insert(artist, (err, result) => cb(err, result));
