@@ -16,7 +16,6 @@ let db = require('./db');
 app.get('/', (req, res) =>
   res.send('It\'s artists API')
 );
-
 app.get('/artists', artistsController.all);
 app.get('/artists/:id', artistsController.findById);
 app.post('/artists', artistsController.create);

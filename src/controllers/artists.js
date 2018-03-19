@@ -18,32 +18,27 @@ exports.findById = (req, res) =>
     res.send(doc);
   });
 
-exports.create = (req, res) => {
-  const artist = { name: req.body.name };
-  Artists.create(artist, err => {
-    if (err) {
-      console.log(err);
-      return res.sendStatus(500);
-    }
-    res.send(artist);
-  })
-};
-exports.update = (req, res) => {
-  const data = { name: req.body.name };
-  Artists.update(req.params.id, { $set: data }, (err, result) => {
+exports.create = (req, res) =>
+  Artists.create({ name: req.body.name }, err => {
     if (err) {
       console.log(err);
       return res.sendStatus(500);
     }
     res.sendStatus(200);
-  })
-};
-exports.delete = (req, res) => {
+  });
+exports.update = (req, res) =>
+  Artists.update(req.params.id, { $set: { name: req.body.name } }, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500);
+    }
+    res.sendStatus(200);
+  });
+exports.delete = (req, res) =>
   Artists.delete(req.params.id, (err, result) => {
     if (err) {
       console.log(err);
       return res.senStatus(500);
     }
     res.sendStatus(200);
-  })
-}
+  });

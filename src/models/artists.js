@@ -16,12 +16,14 @@ exports.findById = (id, cb) =>
 exports.create = (artist, cb) =>
   db.get().collection('artists')
     .insert(artist, (err, result) => cb(err, result));
+
 exports.update = (id, newData, cb) =>
   db.get().collection('artists').updateOne(
     { _id: ObjectID(id) },
     newData,
     (err, result) => cb(err, result)
   );
+
 exports.delete = (id, cb) =>
   db.get().collection('artists').deleteOne(
     { _id: ObjectID(id) },
